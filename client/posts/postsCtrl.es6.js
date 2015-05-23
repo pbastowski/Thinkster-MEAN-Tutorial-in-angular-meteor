@@ -6,7 +6,6 @@ class PostsCtrl {
     constructor(Posts, $stateParams, User) {
         var that = this;
 
-        window.p = Posts;
         that.post = Posts.find($stateParams.id);
 
         that.addComment = function () {

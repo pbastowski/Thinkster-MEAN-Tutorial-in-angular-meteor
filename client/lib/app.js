@@ -1,1 +1,0 @@
-angular.module('flapperNews', ['angular-meteor', 'ui.router']);

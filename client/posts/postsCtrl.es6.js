@@ -1,11 +1,13 @@
 @State({name: 'posts', url: '/posts/{id}'})
 @Component('posts')
 @View({templateUrl: 'client/posts/posts.ng.html'})
-@Inject(['$meteor', '$stateParams', '$rootScope'])
+@Inject(['Posts', '$stateParams', 'User'])
 class PostsCtrl {
-    constructor($meteor, $stateParams, $rootScope) {
+    constructor(Posts, $stateParams, User) {
         var that = this;
-        that.post = $meteor.object(Posts, $stateParams.id);
+
+        window.p = Posts;
+        that.post = Posts.find($stateParams.id);
 
         that.addComment = function () {
             if (that.body === '') { return; }
@@ -13,7 +15,7 @@ class PostsCtrl {
                 that.post.comments = [];
             that.post.comments.push({
                 body:    that.body,
-                author:  $rootScope.currentUser.emails[0].address,
+                author:  User.emails[0].address,
                 upvotes: 0
             });
             that.body = '';

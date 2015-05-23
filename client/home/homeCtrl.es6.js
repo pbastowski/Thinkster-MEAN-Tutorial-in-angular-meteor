@@ -1,18 +1,18 @@
 @State({name: 'home', url: '/home', defaultRoute: true})
 @Component('home')
 @View({templateUrl: 'client/home/home.ng.html'})
-@Inject(['$meteor', '$rootScope'])
+@Inject(['Posts', 'User'])
 class homeCtrl {
-    constructor($meteor, $rootScope) {
+    constructor(Posts, User) {
         var self = this;
 
-        self.posts = $meteor.collection(Posts);
+        self.posts = Posts.find();
 
         self.addPost = function () {
             if (self.title === '') { return; }
-            if (!$rootScope.currentUser) { return; }
+            if (!User) { return; }
             self.posts.push({
-                owner:   $rootScope.currentUser._id,
+                owner:   User._id,
                 title:   self.title,
                 link:    self.link,
                 upvotes: 0
@@ -24,5 +24,6 @@ class homeCtrl {
         self.incrementUpvotes = function (post) {
             post.upvotes++;
         };
+
     }
 }
